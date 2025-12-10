@@ -441,3 +441,4 @@ C:\Users\Gvidas\Desktop\blazer\Cs2SkinsApp.E2E\obj\Debug\net9.0\refint\Cs2SkinsA
 C:\Users\Gvidas\Desktop\blazer\Cs2SkinsApp.E2E\obj\Debug\net9.0\Cs2SkinsApp.E2E.pdb
 C:\Users\Gvidas\Desktop\blazer\Cs2SkinsApp.E2E\obj\Debug\net9.0\Cs2SkinsApp.E2E.genruntimeconfig.cache
 C:\Users\Gvidas\Desktop\blazer\Cs2SkinsApp.E2E\obj\Debug\net9.0\ref\Cs2SkinsApp.E2E.dll
+C:\Users\Gvidas\Desktop\blazer\Cs2SkinsApp.E2E\obj\Debug\net9.0\Cs2SkinsApp.E2E.sourcelink.json

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Cs2SkinsApp.E2E")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+86ba76a45d351c15dd0c35f59a065fd469b52048")]
 [assembly: System.Reflection.AssemblyProductAttribute("Cs2SkinsApp.E2E")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Cs2SkinsApp.E2E")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

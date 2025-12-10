@@ -8,7 +8,7 @@ namespace Cs2SkinsApp.E2E;
 [Parallelizable(ParallelScope.None)]
 public class Cs2SkinsE2ETests : PageTest
 {
-    private const string BaseUrl = "http://localhost:5197";
+    private const string BaseUrl = "https://gvidasvanagas.github.io/Cs2SkinsApp/";
 
     [Test]
     public async Task ShowsHeadingAndSkins()
