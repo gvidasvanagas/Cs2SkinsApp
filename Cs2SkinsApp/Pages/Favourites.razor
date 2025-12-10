@@ -1,0 +1,134 @@
+@page "/favourites"
+@using Cs2SkinsApp.Models
+@using Cs2SkinsApp.Services
+@inject Cs2SkinService SkinService
+@inject FavouritesService FavService
+
+<h2 class="page-title">Favourite Skins</h2>
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+else if (isLoading)
+{
+    <p>Loading skins...</p>
+}
+else if (!FavService.FavouriteIds.Any())
+{
+    <p>You have no favourite skins yet.</p>
+    <a href="/" class="btn btn-primary mt-2">Go pick some</a>
+}
+else
+{
+    <div class="mb-3 d-flex flex-wrap gap-2">
+        <button class="btn btn-outline-danger" @onclick="ClearFavourites">
+            Clear all favourites
+        </button>
+        <a href="/" class="btn btn-secondary">
+            Back to explorer
+        </a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        @foreach (var skin in favouriteSkins)
+        {
+            <div class="col">
+                <div class="card card-skin h-100">
+                    <div class="text-center mt-3 px-3">
+                        <img src="@skin.Image"
+                             alt="@skin.Name"
+                             loading="lazy"
+                             class="img-fluid"
+                             style="max-height:180px; object-fit:contain;" />
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title mb-1">@skin.Name</h5>
+                        <h6 class="card-subtitle mb-2 text-muted-soft d-flex flex-wrap align-items-center gap-1">
+
+                            @if (skin.Rarity != null)
+                            {
+                                <span class="rarity-pill" style="@($"background-color:{skin.Rarity.Color}")">
+                                    @skin.Rarity.Name
+                                </span>
+                            }
+
+                            @if (skin.Stattrak)
+                            {
+                                <span class="badge bg-warning text-dark ms-1">StatTrak™</span>
+                            }
+
+                            @if (skin.Souvenir)
+                            {
+                                <span class="badge bg-info text-dark ms-1">Souvenir</span>
+                            }
+                        </h6>
+
+                        <p class="card-text mb-3">
+                            @CleanDescription(skin.Description)
+                        </p>
+                        <button class="btn btn-warning mt-auto"
+                                @onclick="() => ToggleFavourite(skin)">
+                            Remove from favourites
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<Skin> allSkins = new();
+    private List<Skin> favouriteSkins = new();
+    private bool isLoading = true;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var (skins, error) = await SkinService.GetSkinsAsync();
+        allSkins = skins;
+        errorMessage = error;
+        isLoading = false;
+
+        UpdateFavouriteSkins();
+    }
+
+    private void UpdateFavouriteSkins()
+    {
+        favouriteSkins = allSkins
+            .Where(s => FavService.IsFavourite(s.Id))
+            .ToList();
+    }
+
+    private void ToggleFavourite(Skin skin)
+    {
+        FavService.ToggleFavourite(skin.Id);
+        UpdateFavouriteSkins();
+    }
+
+    private void ClearFavourites()
+    {
+        FavService.Clear();
+        favouriteSkins.Clear();
+    }
+
+    private string CleanDescription(string? description)
+{
+    if (string.IsNullOrWhiteSpace(description))
+        return string.Empty;
+
+    var text = description;
+
+    var markerIndex = text.IndexOf("\\n\\n<i>", StringComparison.OrdinalIgnoreCase);
+    if (markerIndex >= 0)
+    {
+        text = text.Substring(0, markerIndex);
+    }
+
+    text = text.Replace("\\n", " ");
+
+    return text.Trim();
+}
+
+}
