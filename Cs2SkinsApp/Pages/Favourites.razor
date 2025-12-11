@@ -17,9 +17,7 @@ else if (isLoading)
 else if (!FavService.FavouriteIds.Any())
 {
     <p>You have no favourite skins yet.</p>
-    <NavLink href="/" class="btn btn-primary mt-2">
-        Go pick some
-    </NavLink>
+    <a href="/Cs2SkinsApp/" class="btn btn-primary mt-2">Go pick some</a>
 }
 else
 {
@@ -27,9 +25,9 @@ else
         <button class="btn btn-outline-danger" @onclick="ClearFavourites">
             Clear all favourites
         </button>
-        <NavLink href="/" class="btn btn-secondary">
+        <a href="/Cs2SkinsApp/" class="btn btn-secondary">
             Back to explorer
-        </NavLink>
+        </a>
     </div>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
