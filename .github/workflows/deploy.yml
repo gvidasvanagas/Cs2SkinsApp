@@ -1,4 +1,4 @@
-name: Deploy CS2 Skins App (no tests)
+name: Build, Test and Deploy CS2 Skins App
 
 on:
   push:
@@ -15,8 +15,39 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build solution
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Build E2E project
+        working-directory: Cs2SkinsApp.E2E
+        run: dotnet build --configuration Release
+
+      - name: Install Playwright browsers
+        working-directory: Cs2SkinsApp.E2E
+        run: pwsh bin/Release/net9.0/playwright.ps1 install --with-deps
+
+      - name: Run Playwright E2E tests
+        working-directory: Cs2SkinsApp.E2E
+        run: dotnet test --configuration Release --no-build
+
   deploy:
     runs-on: ubuntu-latest
+    needs: build-and-test
 
     steps:
       - name: Checkout repository
