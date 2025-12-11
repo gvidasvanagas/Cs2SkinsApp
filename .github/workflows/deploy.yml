@@ -3,6 +3,7 @@ name: Build, Test and Deploy CS2 Skins App
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
 
 permissions:
   contents: read
